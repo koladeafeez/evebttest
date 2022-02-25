@@ -1,0 +1,46 @@
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('events', {
+      id: { allowNull: false, autoIncrement: true, primaryKey: true, type: Sequelize.INTEGER },
+      type_of_event: { type: Sequelize.STRING},
+      amount_paid: { type: Sequelize.INTEGER },
+      eventCategoryId: { type: Sequelize.INTEGER, allowNull: true, references: {model: 'eventCategories', key: 'id'} },
+      event_title: { type: Sequelize.STRING },
+      experience_level: { type: Sequelize.STRING },
+      event_location: { type: Sequelize.STRING },
+      longitude: { type: Sequelize.STRING },
+      latitude: { type: Sequelize.STRING },
+      country: { type: Sequelize.STRING },
+      state: { type: Sequelize.STRING },
+      city: { type: Sequelize.STRING },
+      zip_code: { type: Sequelize.INTEGER },
+      event_banner: { type: Sequelize.STRING },
+      description: { type: Sequelize.TEXT },
+      event_summary: { type: Sequelize.STRING },
+      tags: { type: Sequelize.STRING },
+      starting_date: { type: Sequelize.DATEONLY },
+      ending_date: { type: Sequelize.DATEONLY },
+      starting_time: { type: Sequelize.STRING },
+      ending_time: { type: Sequelize.STRING },
+      isRecuringEvent: { type: Sequelize.BOOLEAN, default: 0},
+      isListed: { type: Sequelize.BOOLEAN, default: 0},
+      event_recuring_ends: { type: Sequelize.DATEONLY },
+      event_recuring_frequency: { type: Sequelize.STRING },
+      expected_no_of_attendees: { type: Sequelize.INTEGER },
+      isApproved: { type: Sequelize.BOOLEAN },
+      approvedOrDisapproved_by: { type: Sequelize.INTEGER, allowNull: true, references: {model: 'Users', key: 'id'} },
+      reason_for_disapproval: { type: Sequelize.TEXT, allowNull: true },
+      approvedOrDisapprovedAt: { type: Sequelize.DATE },
+      userId: { type: Sequelize.INTEGER, allowNull: false, references: {model: 'Users', key: 'id'} },
+      createdAt: { allowNull: false, type: Sequelize.DATE },
+      updatedAt: { allowNull: false, type: Sequelize.DATE },
+      isSoldOut: { type: Sequelize.BOOLEAN, default: 0},
+      isDeleted: { type: Sequelize.BOOLEAN, default: 0},
+      deletedAt: Sequelize.DATE,
+      deleted_by: { type: Sequelize.INTEGER, allowNull: true, references: {model: 'Users', key: 'id'} },
+    });
+  },
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('events');
+  }
+};
